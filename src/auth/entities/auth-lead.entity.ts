@@ -3,12 +3,14 @@ import {
   CreatedAt,
   DataType,
   Model,
+  PrimaryKey,
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
 
 @Table
-export class Auth extends Model {
+export class AuthLeads extends Model {
+  @PrimaryKey
   @Column({ type: DataType.INTEGER, allowNull: false })
   id: string;
 
