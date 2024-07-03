@@ -11,8 +11,8 @@ import {
 @Table
 export class AuthLeads extends Model {
   @PrimaryKey
-  @Column({ type: DataType.INTEGER, allowNull: false })
-  id: string;
+  @Column({ type: DataType.INTEGER, autoIncrement: true, allowNull: false })
+  id: number;
 
   @Column({ type: DataType.STRING, allowNull: false })
   name: string;

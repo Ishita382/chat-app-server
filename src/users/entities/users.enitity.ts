@@ -19,8 +19,8 @@ export class User extends Model {
   @Column({ allowNull: false })
   name: string;
 
-  @Column({ allowNull: false, unique: true })
-  username: string;
+  @Column({ allowNull: false })
+  email: string;
 
   @Column({ allowNull: false })
   password: string;

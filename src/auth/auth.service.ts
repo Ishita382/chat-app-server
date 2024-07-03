@@ -18,13 +18,21 @@ export class AuthService {
       ...registerUserDto,
     });
 
-    return authLead;
+    console.log(authLead, 'auth lead here');
+
+    const user = await this.usersService.create(authLead);
+
+    console.log(user, 'user user');
+
+    return user;
   }
 
   async login(loginUserDto: LoginUserDto) {
     const authLead = await this.usersService.findOne({
       email: loginUserDto.email,
     });
+
+    console.log(authLead, 'auth lead');
 
     return authLead;
   }
