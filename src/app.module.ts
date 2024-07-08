@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ChatGateway } from './chat/chat.gateway';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -34,6 +35,6 @@ import { ScheduleModule } from '@nestjs/schedule';
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ChatGateway],
 })
 export class AppModule {}
