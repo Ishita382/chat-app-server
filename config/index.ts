@@ -13,7 +13,7 @@ export const applicationConfig = {
     expiresIn: '24h',
     algorithm: 'HS256' as Algorithm,
     issuer: 'chat-app-server',
-    // emailTokenExpiresIn: '5m',
+    emailTokenExpiresIn: '5m',
   },
 
   db: {

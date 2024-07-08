@@ -4,9 +4,23 @@ import { UsersModule } from 'src/users/users.module';
 import { AuthLeads } from './entities/auth-lead.entity';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtModule } from '@nestjs/jwt';
+import { applicationConfig } from 'config';
 
 @Module({
-  imports: [SequelizeModule.forFeature([AuthLeads]), UsersModule],
+  imports: [
+    SequelizeModule.forFeature([AuthLeads]),
+    UsersModule,
+    JwtModule.register({
+      global: true,
+      secret: applicationConfig.jwt.secret,
+      signOptions: {
+        expiresIn: applicationConfig.jwt.expiresIn,
+        issuer: applicationConfig.jwt.issuer,
+        algorithm: applicationConfig.jwt.algorithm,
+      },
+    }),
+  ],
   providers: [AuthService],
   controllers: [AuthController],
   exports: [],

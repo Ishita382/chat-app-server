@@ -12,15 +12,18 @@ export class UsersService {
     name,
     email,
     password,
+    verificationToken,
   }: {
     name: string;
     email: string;
     password: string;
+    verificationToken: string;
   }) {
     const user = await this.userModel.create({
       name,
       email,
       password,
+      verificationToken,
     });
 
     return user;
