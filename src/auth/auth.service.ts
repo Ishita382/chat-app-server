@@ -4,7 +4,7 @@ import { UsersService } from 'src/users/users.service';
 import { RegisterUserDto } from './dto/register.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { LoginUserDto } from './dto/login.dto';
-import { generateOtpAndVerificationToken } from 'src/utils/helpers';
+import { generateOtpAndtoken } from 'src/utils/helpers';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class AuthService {
   ) {}
 
   async register(registerUserDto: RegisterUserDto) {
-    const { verificationToken } = generateOtpAndVerificationToken(
+    const { token } = generateOtpAndtoken(
       {
         email: registerUserDto.email,
         name: registerUserDto.name,
@@ -26,10 +26,8 @@ export class AuthService {
     );
     const authLead = await this.authLeads.create({
       ...registerUserDto,
-      verificationToken,
+      token,
     });
-
-    console.log(authLead, 'auth lead');
 
     const user = await this.usersService.create(authLead);
 

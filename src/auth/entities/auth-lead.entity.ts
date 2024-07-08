@@ -24,7 +24,7 @@ export class AuthLeads extends Model {
   password: string;
 
   @Column(DataType.TEXT)
-  verificationToken: string;
+  token: string;
 
   @CreatedAt
   createdAt: Date;
