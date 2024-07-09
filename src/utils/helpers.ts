@@ -17,3 +17,17 @@ export const generateOtpAndtoken = (
 
   return { token };
 };
+
+export const generateJwt = async (
+  payload: {
+    id: string;
+    name: string;
+  },
+  jwtService: JwtService,
+) => {
+  const jwtPayload = { sub: payload.id, name: payload.name };
+  return {
+    accessToken: await jwtService.signAsync(jwtPayload),
+    expiresIn: applicationConfig.jwt.expiresIn,
+  };
+};
