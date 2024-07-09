@@ -35,8 +35,21 @@ export class UsersService {
     name?: string;
     email?: string;
   }) {
+    let where = {};
+    if (id && name) {
+      where = {
+        ...where,
+        id: id,
+        name: name,
+      };
+    }
+
+    if (email) {
+      where = { ...where, email: email };
+    }
+
     const user = await this.userModel.findOne({
-      where: { email },
+      where,
     });
 
     return user;

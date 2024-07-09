@@ -42,7 +42,6 @@ describe('ChatGateway', () => {
     ioClient.emit('ping', 'Hello world!');
     await new Promise<void>((resolve) => {
       ioClient.on('connect', () => {
-        console.log('connected');
       });
       ioClient.on('pong', (data) => {
         expect(data).toBe('Hello world!');
