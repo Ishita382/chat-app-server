@@ -4,8 +4,9 @@ import { UsersService } from 'src/users/users.service';
 import { RegisterUserDto } from './dto/register.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { LoginUserDto } from './dto/login.dto';
-import { generateOtpAndtoken } from 'src/utils/helpers';
+import { generateJwt } from 'src/utils/helpers';
 import { JwtService } from '@nestjs/jwt';
+import { Unauthorized } from 'src/utils/exceptions';
 
 @Injectable()
 export class AuthService {
@@ -17,21 +18,18 @@ export class AuthService {
   ) {}
 
   async register(registerUserDto: RegisterUserDto) {
-    const { token } = generateOtpAndtoken(
-      {
-        email: registerUserDto.email,
-        name: registerUserDto.name,
-      },
-      this.jwtService,
-    );
     const authLead = await this.authLeads.create({
       ...registerUserDto,
-      token,
     });
 
     const user = await this.usersService.create(authLead);
 
-    return user;
+    await authLead.destroy();
+
+    return {
+      user,
+      ...(await generateJwt({ id: user.id, name: user.name }, this.jwtService)),
+    };
   }
 
   async login(loginUserDto: LoginUserDto) {
@@ -39,6 +37,16 @@ export class AuthService {
       email: loginUserDto.email,
     });
 
-    return authLead;
+    if (!authLead) {
+      throw new Unauthorized();
+    }
+
+    return {
+      authLead,
+      ...(await generateJwt(
+        { id: authLead.id, name: authLead.name },
+        this.jwtService,
+      )),
+    };
   }
 }

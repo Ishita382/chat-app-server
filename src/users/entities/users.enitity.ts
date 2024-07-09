@@ -25,9 +25,6 @@ export class User extends Model {
   @Column({ allowNull: false })
   password: string;
 
-  @Column(DataType.TEXT)
-  token: string;
-
   @CreatedAt
   createdAt: Date;
 

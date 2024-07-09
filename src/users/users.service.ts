@@ -12,24 +12,29 @@ export class UsersService {
     name,
     email,
     password,
-    token,
   }: {
     name: string;
     email: string;
     password: string;
-    token: string;
   }) {
     const user = await this.userModel.create({
       name,
       email,
       password,
-      token,
     });
 
     return user;
   }
 
-  async findOne({ email }: { email: string }) {
+  async findOne({
+    id,
+    name,
+    email,
+  }: {
+    id?: string;
+    name?: string;
+    email?: string;
+  }) {
     const user = await this.userModel.findOne({
       where: { email },
     });
