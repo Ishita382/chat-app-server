@@ -36,10 +36,16 @@ export class UsersService {
     email?: string;
   }) {
     let where = {};
-    if (id && name) {
+    if (id) {
       where = {
         ...where,
         id: id,
+      };
+    }
+
+    if (name) {
+      where = {
+        ...where,
         name: name,
       };
     }

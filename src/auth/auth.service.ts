@@ -7,6 +7,7 @@ import { LoginUserDto } from './dto/login.dto';
 import { generateJwt } from 'src/utils/helpers';
 import { JwtService } from '@nestjs/jwt';
 import { Unauthorized } from 'src/utils/exceptions';
+import { Socket } from 'socket.io-client';
 
 @Injectable()
 export class AuthService {
@@ -33,6 +34,8 @@ export class AuthService {
   }
 
   async login(loginUserDto: LoginUserDto) {
+    // let socket: Socket;
+
     const authLead = await this.usersService.findOne({
       email: loginUserDto.email,
     });
@@ -40,6 +43,10 @@ export class AuthService {
     if (!authLead) {
       throw new Unauthorized();
     }
+
+    console.log(authLead.id, 'auth lead');
+
+    // socket.auth = { authLead.id };
 
     return {
       authLead,

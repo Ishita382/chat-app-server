@@ -8,6 +8,8 @@ import {
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
+import { Chat } from 'src/chat/entities/chat.entity';
+import { OneToMany } from 'typeorm';
 
 @Table({ underscored: true })
 export class User extends Model {
@@ -24,6 +26,12 @@ export class User extends Model {
 
   @Column({ allowNull: false })
   password: string;
+
+  @OneToMany(() => Chat, (message) => message.sender)
+  sentMessages: Chat[];
+
+  @OneToMany(() => Chat, (message) => message.recipient)
+  receivedMessages: Chat[];
 
   @CreatedAt
   createdAt: Date;
