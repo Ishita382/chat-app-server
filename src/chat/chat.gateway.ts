@@ -51,6 +51,7 @@ export class ChatGateway
     @ConnectedSocket() client: Socket,
   ) {
     const user = await this.usersService.findOne({ id: userId });
+    console.log(user, 'user user here here');
     if (user) {
       this.activeUsers.set(client.id, user.name);
       this.server.emit('activeUsers', Array.from(this.activeUsers.values()));

@@ -35,6 +35,7 @@ export class UsersService {
     name?: string;
     email?: string;
   }) {
+    console.log(' coming hrere?');
     let where = {};
     if (id) {
       where = {
